@@ -12,6 +12,6 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-		response.sendRedirect("http://localhost:5173");
+		response.sendRedirect(request.getRequestURL().toString());
 	}
 }
