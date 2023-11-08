@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {DateTime} from 'luxon';
+
+type AppUser = {
+    username: string,
+    registrationDate: string,
+    role: "USER" | "ADMIN",
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [appUser, setAppUser] = useState<AppUser | undefined>(undefined);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    function login() {
+        window.open("http://localhost:8080/oauth2/authorization/github", "_self");
+    }
+
+    function logout() {
+        axios.post("/api/v1/auth/logout")
+            .then(() => {
+                setAppUser(undefined);
+            })
+            .catch(() => {
+                console.log("Logout failed!");
+            });
+    }
+
+    useEffect(() => {
+        axios.get("/api/v1/auth/me")
+            .then((response) => {
+                setAppUser(response.data);
+            })
+            .catch((e) => console.log(e));
+    }, []);
+
+    let date;
+    if (appUser) {
+        date = DateTime.fromISO(appUser.registrationDate, {zone: 'Europe/Berlin'}).toFormat('yyyy/MM/dd');
+    }
+
+    return (
+        <>
+            {appUser &&
+                (
+                    <>
+                        <h1>Welcome back, {appUser.username}!</h1>
+                        <p>You are registered since {date} and your role is {appUser.role}.</p>
+                        <button onClick={logout}>Logout</button>
+                    </>
+                )}
+            {!appUser && (
+                <>
+                    <h1>Welcome!</h1>
+                    <button onClick={login}>Login with GitHub</button>
+                </>
+            )}
+        </>
+    )
 }
 
 export default App
