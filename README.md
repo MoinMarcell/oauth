@@ -1,4 +1,5 @@
 # About
+
 A demo of a Spring Boot Application where we use the OAuth2Client in combination with a React / Vite Frontend.
 
 # How to run
@@ -14,10 +15,16 @@ spring.security.oauth2.client.registration.github.client-secret=YOUR_CLIENT_SECR
 spring.security.oauth2.client.registration.github.scope=user
 ```
 
-5. Connect a MongoDB instance to the application (e.g. via Docker)
-6. Start the backend
-7. Start the frontend
-8. Open http://localhost:5173 in your browser
-9. Click on "Login with GitHub"
-10. You should be redirected to GitHub and asked to login
-11. After logging in you should be redirected back to the application and see a welcome message with your username
+5. Activate the application-secrets.properties in IntelliJ
+
+![drop-down.png](img%2Fdrop-down.png)
+
+![config-window.png](img%2Fconfig-window.png)
+
+6. Connect a MongoDB instance to the application (e.g. via Docker)
+7. Start the backend
+8. Start the frontend
+9. Open http://localhost:5173 in your browser
+10. Click on "Login with GitHub"
+11. You should be redirected to GitHub and asked to login
+12. After logging in you should be redirected back to the application and see a welcome message with your username
