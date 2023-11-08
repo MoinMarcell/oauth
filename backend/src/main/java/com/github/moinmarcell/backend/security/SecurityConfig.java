@@ -2,6 +2,7 @@ package com.github.moinmarcell.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,7 +22,7 @@ public class SecurityConfig {
 						.anyRequest().authenticated()
 				)
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-				.oauth2Login(c -> c.successHandler(new CustomAuthenticationSuccessHandler()));
+				.oauth2Login(Customizer.withDefaults());
 		return http.build();
 	}
 
