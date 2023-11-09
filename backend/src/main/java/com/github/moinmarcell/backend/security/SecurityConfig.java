@@ -15,19 +15,19 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-				.csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(a -> a
-						.anyRequest().permitAll()
-				)
-				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-				.exceptionHandling(exceptionHandlingConfigurer ->
-						exceptionHandlingConfigurer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-				.logout(logout -> logout.logoutSuccessUrl("/"))
-				.oauth2Login(Customizer.withDefaults());
-		return http.build();
-	}
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(a -> a
+                        .anyRequest().permitAll()
+                )
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .exceptionHandling(exceptionHandlingConfigurer ->
+                        exceptionHandlingConfigurer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .logout(logout -> logout.logoutSuccessUrl("/"))
+                .oauth2Login(Customizer.withDefaults());
+        return http.build();
+    }
 
 }
