@@ -1,12 +1,10 @@
 package com.github.moinmarcell.backend.security;
 
 import com.github.moinmarcell.backend.appuser.AppUser;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +20,6 @@ public class AuthController {
 			@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient
 	) {
 		return authService.getLoggedInUser(authorizedClient);
-	}
-
-	@PostMapping("/logout")
-	public void logout(HttpSession session) {
-		authService.logout(session);
 	}
 
 }

@@ -19,13 +19,7 @@ function App() {
     }
 
     function logout() {
-        axios.post("/api/v1/auth/logout")
-            .then(() => {
-                setAppUser(undefined);
-            })
-            .catch(() => {
-                console.log("Logout failed!");
-            });
+        window.open('/logout', '_self')
     }
 
     useEffect(() => {
