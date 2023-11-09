@@ -16,6 +16,8 @@
 /backend/.mvn/
 /backend/mvnw
 /backend/mvnw.cmd
+/backend/src/main/resources/application-secrets.properties
+/backend/src/main/resources/static/
 
 # frontend
 /frontend/logs
@@ -29,4 +31,3 @@
 /frontend/dist
 /frontend/dist-ssr
 /frontend/*.local
-/backend/src/main/resources/application-secrets.properties
