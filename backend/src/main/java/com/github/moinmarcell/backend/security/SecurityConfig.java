@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${frontend.base-url:}")
+    @Value("${frontend.base-url}")
     private String frontendBaseUrl;
 
     @Bean
