@@ -14,6 +14,7 @@ You can find a Demo of the application here: https://oauth-demo-mkh8.onrender.co
 spring.security.oauth2.client.registration.github.client-id=YOUR_CLIENT_ID
 spring.security.oauth2.client.registration.github.client-secret=YOUR_CLIENT_SECRET
 spring.security.oauth2.client.registration.github.scope=user
+frontend.base-url=http://localhost:5173
 ```
 
 5. Activate the application-secrets.properties in IntelliJ
