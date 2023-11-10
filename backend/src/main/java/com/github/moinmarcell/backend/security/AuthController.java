@@ -1,9 +1,9 @@
 package com.github.moinmarcell.backend.security;
 
-import com.github.moinmarcell.backend.appuser.AppUser;
 import lombok.AllArgsConstructor;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AuthController {
 
-	private final AuthService authService;
-
 	@GetMapping("/me")
-	public AppUser getMe(
-			@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient
-	) {
-		return authService.getLoggedInUser(authorizedClient);
+	public String getMe() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (auth instanceof OAuth2AuthenticationToken token) {
+			return token.getPrincipal().getAttributes().get("login").toString();
+		}
+
+		return auth.getName();
 	}
 
 }

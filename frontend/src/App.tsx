@@ -1,16 +1,9 @@
 import './App.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {DateTime} from 'luxon';
-
-type AppUser = {
-    username: string,
-    registrationDate: string,
-    role: "USER" | "ADMIN",
-}
 
 function App() {
-    const [appUser, setAppUser] = useState<AppUser | undefined>(undefined);
+    const [appUser, setAppUser] = useState<string>();
 
     function login() {
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -19,8 +12,13 @@ function App() {
     }
 
     function logout() {
-        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
-        window.open(host + '/logout', '_self')
+        axios.post("/api/logout")
+            .then(() => {
+                setAppUser(undefined)
+            })
+            .catch(error => {
+                console.error(error)
+            })
     }
 
     useEffect(() => {
@@ -31,18 +29,12 @@ function App() {
             .catch((e) => console.log(e));
     }, []);
 
-    let date;
-    if (appUser) {
-        date = DateTime.fromISO(appUser.registrationDate, {zone: 'Europe/Berlin'}).toFormat('yyyy/MM/dd');
-    }
-
     return (
         <>
             {appUser &&
                 (
                     <>
-                        <h1>Welcome back, {appUser.username}!</h1>
-                        <p>You are registered since {date} and your role is {appUser.role}.</p>
+                        <h1>Welcome back, {appUser}!</h1>
                         <button onClick={logout}>Logout</button>
                     </>
                 )}
