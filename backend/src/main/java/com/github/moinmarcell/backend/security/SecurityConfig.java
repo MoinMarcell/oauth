@@ -29,14 +29,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandlingConfigurer ->
                         exceptionHandlingConfigurer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .logout(logout -> logout.logoutSuccessUrl(frontendBaseUrl).permitAll())
-                .oauth2Login(c -> {
-                    try {
-                        c.init(http);
-                        c.defaultSuccessUrl(frontendBaseUrl, true);
-                    } catch (Exception e) {
-                        throw new IllegalArgumentException(e);
-                    }
-                });
+                .oauth2Login(c -> c.defaultSuccessUrl(frontendBaseUrl, true));
         return http.build();
     }
 
