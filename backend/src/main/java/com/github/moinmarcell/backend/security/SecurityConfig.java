@@ -28,11 +28,11 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .exceptionHandling(exceptionHandlingConfigurer ->
                         exceptionHandlingConfigurer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .logout(logout -> logout.logoutSuccessUrl(frontendBaseUrl + "/").permitAll())
+                .logout(logout -> logout.logoutSuccessUrl(frontendBaseUrl).permitAll())
                 .oauth2Login(c -> {
                     try {
                         c.init(http);
-                        c.defaultSuccessUrl(frontendBaseUrl + "/", true);
+                        c.defaultSuccessUrl(frontendBaseUrl, true);
                     } catch (Exception e) {
                         throw new IllegalArgumentException(e);
                     }
