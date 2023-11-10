@@ -13,8 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${my.enviroment}")
-    private String environment;
+    @Value("${frontend.base-url:}")
+    private String frontendBaseUrl;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,24 +24,14 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-                .logout(logout -> {
-                    if (environment.equals("prod")) {
-                        logout.logoutSuccessUrl("/").permitAll();
-                    } else {
-                        logout.logoutSuccessUrl("http://localhost:5173").permitAll();
-                    }
-                })
+                .logout(logout -> logout.logoutSuccessUrl(frontendBaseUrl + "/").permitAll())
                 .oauth2Login(c -> {
                     try {
                         c.init(http);
-                        if (environment.equals("prod")) {
-                            c.defaultSuccessUrl("/", true);
-                        } else {
-                            c.defaultSuccessUrl("http://localhost:5173", true);
-                        }
                     } catch (Exception e) {
-                        throw new IllegalArgumentException(e);
+                        throw new RuntimeException(e);
                     }
+                    c.defaultSuccessUrl(frontendBaseUrl + "/", true);
                 });
         return http.build();
     }
