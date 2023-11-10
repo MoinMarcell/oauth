@@ -1,7 +1,7 @@
 # About
 
 A demo of a Spring Boot Application where we use the OAuth2Client in combination with a React / Vite Frontend.
-You can find a Demo of the application here: https://oauth-demo-mkh8.onrender.com/
+You can find a Demo of the application here: https://oauth-demo-mkh8.onrender.com/ (The Server shuts down after 15 minutes of inactivity. The loading of the Page might be first a bit longer. Just wait a little bit.)
 
 # How to run
 
